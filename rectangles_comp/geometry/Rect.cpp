@@ -15,7 +15,7 @@ Rect::Rect(const Point p0, const Point p1, const Point p2, const Point p3) : poi
     edges[2] = new Segment(points[2], points[3]);
     edges[3] = new Segment(points[3], points[0]);
 
-    if (!Rect::correct_check(points[0], points[1], points[2], points[3])) throw;  // TODO
+    if (!Rect::correct_check(points[0], points[1], points[2], points[3])) throw std::invalid_argument("A rectangle with such coordinates does not exist");
 
 }
 

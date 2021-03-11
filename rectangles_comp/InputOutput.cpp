@@ -29,7 +29,6 @@ void InputOutput::print(long long num, std::string end) {
 
 void InputOutput::print(long double num, std::string end) {
 	print(num, ostream, end);
-
 }
 
 std::ostream& InputOutput::operator<<(std::string str) {

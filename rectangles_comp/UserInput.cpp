@@ -37,5 +37,7 @@ ProgramInput* UserInput::user_input() {
 RectsPair ProgramInput::extract() {
 	Rect* rect1 = new Rect(rects[0]);
 	Rect* rect2 = new Rect(rects[1]);
-	return RectsPair(rect1, rect2);
+	RectsPair rp = RectsPair(rect1, rect2);
+
+	return rp;
 }

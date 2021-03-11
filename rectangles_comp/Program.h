@@ -6,6 +6,7 @@
 #include "InputOutput.h"
 #include "UserInput.h"
 #include "DebugSet.h"
+#include "ProgramIO.h"
 #include "geometry/Rect.h"
 
 const std::string greeting_string =
@@ -32,7 +33,7 @@ public:
 
 		for (unsigned int i = 0; i < set.size; i++) {
 			rects = set[i].extract();
-			if (rects[0].are_intersect(rects[1]) == set[i].expected) {
+			if (rects[0]->are_intersect(*rects[1]) == set[i].expected) {
 
 			}
 			else {
@@ -65,11 +66,10 @@ public:
 		}
 		else {
 			if (std::filesystem::exists(filepath)) {
-				if (std::filesystem::is_regular_file(filepath)) {
-					std::ifstream ifile(filepath, std::ifstream::in);
-					if (ifile.is_open()) {
-						return InputOutput(&ifile, &std::cout);
-					}
+				std::ifstream *ifile = new std::ifstream(filepath, std::ifstream::in);
+				if (ifile->is_open()) {
+					io << "Successful input!" << std::endl;
+					return InputOutput(ifile, &std::cout);
 				}
 			}
 			throw std::invalid_argument("Invalid filepath!");
@@ -94,16 +94,73 @@ public:
 	}
 
 	void ask_for_input_save(ProgramInput* input) {
+		for (;;) {
+			io << "[ENTER] to continue, filepath to save input to the file: " << std::endl;
+			std::string filepath;
+			io >> filepath;
+			if (filepath == "\n") return;
 
+			try {
+				std::ofstream file_out(filepath);
+				input->write(&file_out);
+				io << "Input saved successfully!" << std::endl;
+				return;
+			}
+			catch (std::system_error) {
+				io << "Error! Check that the path you entered is correct.";
+				continue;
+			}
+		}
+	}
+
+	void ask_for_output_save(ProgramIO output) {
+		for (;;) {
+			io << "[ENTER] to continue, filepath to save output to file: " << std::endl;
+			std::string filepath;
+			io >> filepath;
+			if (filepath == "\n") return;
+
+			try {
+				std::ofstream file_out(filepath);
+				output.write(&file_out);
+				io << "Output saved successfully!" << std::endl;
+				return;
+			}
+			catch (std::system_error) {
+				io << "Error! Check that the path you entered is correct.";
+				continue;
+			}
+		}
+	}
+
+	ProgramOutput do_comp(Rect r1, Rect r2) {
+		return ProgramOutput(r1.are_intersect(r2));
 	}
 
 	void rectangles_comp() {
 		InputOutput local_io = choose_input();
 		UserInput user_input(local_io);
 		ProgramInput* program_input = user_input.user_input();
+		RectsPair rp;
 		if (local_io.istream == &std::cin) ask_for_input_save(program_input);
+		
+		try {
+			rp = program_input->extract();
+		} 
+		catch (std::invalid_argument) {
+			io << "A rectangle with such coordinates does not exist." << std::endl;
+			return;
+		}
 
-		RectsPair rp = program_input->extract();
+		ProgramOutput program_output = do_comp(*rp[0], *rp[1]);
+
+		io << ((program_output.State) ? "The rectangles intersect." : "The rectangles do not intersect.") << std::endl << std::endl;
+
+		ask_for_output_save(ProgramIO(*program_input, program_output));
+		for (int i = 0; i < 2; i++) {
+			delete rp[i];
+		}
+		delete rp.r;
 
 	}
 

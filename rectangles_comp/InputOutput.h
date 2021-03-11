@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sstream>
 #include <malloc.h>
+#include <filesystem>
 #include "geometry/Rect.h"
 
 class InputOutput {
@@ -39,19 +40,15 @@ public:
 	template <typename T>
 	T get_num() {
 		T num = 0;
-		std::string str;
-		std::stringstream ss;
-		*this >> str;
-		ss << str;
-		ss >> num;
+		*this->istream >> num;
 
-		while (ss.fail()) {
+		while (this->istream->fail()) {
 			if (istream == &std::cin) {
-				print("Error! Enter the correct number!");
-				ss.clear();
-				ss.ignore();
-				ss << str;
-				ss >> num;
+				*this << "Error! Enter the correct number: " << std::endl;
+				this->istream->clear();
+				this->istream->ignore(INT_MAX, '\n');
+
+				*this->istream >> num;
 				continue;
 			}
 			else {
@@ -59,6 +56,8 @@ public:
 				throw std::invalid_argument("Invalid number");
 			}
 		}
+		this->istream->clear();
+		this->istream->ignore(INT_MAX, '\n');
 		return num;
 	}
 
@@ -80,6 +79,7 @@ public:
 
 	void print(long double num, std::string = "\n");
 
+
 	template <typename T>
 	static void print_arr(T *arr, std::ostream* stream, std::string sep=" ") {
 		int size = _msize(arr) / sizeof(T);
@@ -95,7 +95,7 @@ public:
 	}
 
 	bool file_exists(std::string filepath) {
-
+		return std::filesystem::exists(filepath);
 	}
 
 	bool file_exists_and_correct(std::string filepath) {

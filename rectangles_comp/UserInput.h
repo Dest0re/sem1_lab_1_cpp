@@ -10,16 +10,15 @@ struct RectsPair {
 		r[1] = r1;
  	}
 	RectsPair() {
-		Rect r0 = Rect();
-		Rect r1 = Rect();
-		r[0] = &r0;
-		r[1] = &r1;
+		Rect *r0 = new Rect();
+		Rect *r1 = new Rect();
+		r[0] = r0;
+		r[1] = r1;
 	}
 	~RectsPair() {
-		delete r;
 	}
-	Rect operator[](int num) {
-		return *r[num];
+	Rect* operator[](int num) {
+		return r[num];
 	}
 };
 

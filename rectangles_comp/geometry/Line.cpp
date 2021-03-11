@@ -6,7 +6,6 @@ bool Line::correct_check() {
 
 Line::Line(const Point point1, const Point point2) : p1{ point1 }, p2{ point2 } {
 
-    std::cout << p1.x;
 
     if (p1 == p2) {
         throw;  // TODO
