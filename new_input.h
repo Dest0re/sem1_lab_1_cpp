@@ -6,7 +6,7 @@
 #include <filesystem>
 
 
-class ReadNumError : std::exception {
+struct ReadNumError : std::exception {
 private:
 	std::string _error_text;
 
@@ -18,7 +18,7 @@ public:
 	}
 };
 
-class FileReadingError : std::exception {
+struct FileReadingError : std::exception {
 private:
 	std::string _error_text;
 
@@ -30,7 +30,7 @@ public:
 	}
 };
 
-class FileNotOpenError : std::exception {
+struct FileNotOpenError : std::exception {
 private:
 	std::string _error_text;
 
@@ -42,7 +42,7 @@ public:
 	}
 };
 
-class EOFError : std::exception {
+struct EOFError : std::exception {
 private:
 	std::string _error_text;
 
@@ -57,16 +57,16 @@ public:
 class InputI {
 public:
 	std::istream* stream = 0;
-	template <typename T>
-	T get_num() = 0;
+
+
 	virtual std::string get_string() = 0;
 
-protected:
+
 	// Получение строки.
 	std::string _get_string() {
 		std::string str;
 		std::getline(*stream, str);
-		
+
 		return (str != "" ? str : "\n");
 	}
 
@@ -87,13 +87,18 @@ protected:
 
 		return number;
 	}
+};
 
+
+class ConsoleInput : InputI {
+
+private:
 
 	// Получение числа типа double в диапазоне от min до max, range_error при неудаче.
 	template <typename T>
 	T _get_num(T min, T max) {
 		T number = get_num<T>();
-		
+
 		if (number >= min && number <= max) {
 			return number;
 		}
@@ -101,28 +106,27 @@ protected:
 			throw std::range_error("Number must be in provided range");
 		}
 	}
-};
 
 
-class ConsoleInput : InputI {
+public:
+	template <typename T>
+	T get_num() {
+		while (true) {
+			try {
+				return InputI::_get_num<T>();
+			}
+			catch (ReadNumError e) {
+				std::cout << "Wrong number! Try again:" << std::endl;
+			}
+		}
+	}
+
 	ConsoleInput() {
 		this->stream = &std::cin;
 	}
 
 	std::string get_string() {
 		return this->_get_string();
-	}
-
-	template <typename T>
-	T get_num() {
-		while (true) {
-			try {
-				return _get_num<T>();
-			}
-			catch (ReadNumError e) {
-				std::cout << "Wrong number! Try again:" << std::endl;
-			}
-		}
 	}
 
 	template <typename T>
@@ -136,6 +140,7 @@ class ConsoleInput : InputI {
 			}
 		}
 	}
+
 };
 
 
@@ -153,6 +158,19 @@ private:
 		return std::filesystem::is_regular_file(filepath, ec);
 	}
 
+	// Получение числа типа double в диапазоне от min до max, range_error при неудаче.
+	template <typename T>
+	T _get_num(T min, T max) {
+		T number = get_num<T>();
+
+		if (number >= min && number <= max) {
+			return number;
+		}
+		else {
+			throw std::range_error("Number must be in provided range");
+		}
+	}
+
 public:
 	FileInput(std::string filepath, std::ios_base::openmode mode) : _filepath{ filepath } {
 		this->stream = new std::ifstream(filepath, mode);
@@ -168,6 +186,7 @@ public:
 		}
 	}
 
+
 	std::string get_string() {
 		if (!static_cast<std::ifstream*>(stream)->eof()) {
 			return _get_string();
@@ -180,13 +199,12 @@ public:
 	template <typename T>
 	T get_num() {
 		if (!static_cast<std::ifstream*>(stream)->eof()) {
-			return _get_num<T>();
+			return InputI::_get_num<T>();
 		}
 		else {
 			eof_exc("Error while getting a num.");
 		}
 	}
-
 
 	template <typename T>
 	T get_num(T min, T max) {
@@ -197,7 +215,6 @@ public:
 			eof_exc("Error while getting a num in range.");
 		}
 	}
-
 
 	~FileInput() {
 		static_cast<std::ifstream*>(stream)->close();
