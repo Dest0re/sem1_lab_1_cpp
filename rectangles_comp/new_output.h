@@ -44,7 +44,8 @@ class OutputI {
 protected:
 	template <typename T>
 	bool _print(T value, std::string end = "\n") {
-		*stream << value;
+		
+		if (!(*stream << value)) throw WriteError("Error while writing data.");
 
 		if (stream->fail()) {
 			stream->clear();
@@ -83,7 +84,9 @@ public:
 
 	static bool IsFileExist(std::string filepath) {
 		std::ifstream file(filepath);
-		return file.good();
+		bool result = file.good();
+		file.close();
+		return result;
 	}
 
 	static bool TryToOverwrite(std::string filepath) {
@@ -96,7 +99,7 @@ public:
 		return true;
 	}
 
-	FileOutput(std::string filepath) : _filepath{ filepath } {
+	FileOutput(std::string filepath, std::ios_base::openmode mode) : _filepath{ filepath } {
 		if (!IsFileExist(filepath)) {
 			throw FileNotExistError("File does not exist.");
 		}
@@ -105,6 +108,6 @@ public:
 			throw FileAlreadyExistError("File already exist.");
 		}
 
-		stream = &std::ofstream(filepath);
+		stream = &std::ofstream(filepath, mode);
 	}
 };
