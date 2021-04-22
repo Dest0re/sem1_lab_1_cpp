@@ -81,11 +81,15 @@ public:
 	}
 
 	static bool TryToOverwrite(std::string filepath) {
-		if (IsFileExist(filepath)) {
+		std::error_code ec;
+		if (std::filesystem::exists(filepath, ec)) {
 			std::string user_choice;
 			std::cout << "File already exists. [ENTER] to overwrite, any symbol to return:" << std::endl;
 			getline(std::cin, user_choice);
 			return user_choice == "";
+		}
+		else if (ec.value() == 87) {
+			throw FileNotOpenError("File cannot be open");
 		}
 		return true;
 	}
@@ -101,16 +105,16 @@ public:
 	}
 
 	FileOutput(std::string filepath, std::ios_base::openmode mode) : _filepath{ filepath } {
-		std::error_code ec;
-		if (!std::filesystem::is_regular_file(filepath, ec)) {
-			throw FileNotOpenError("File cannot be open");
-		}
 
 		if (!TryToOverwrite(filepath)) {
 			throw FileAlreadyExistError("File already exist.");
 		}
 
 		stream = new std::ofstream(filepath, mode);
+
+		if (!static_cast<std::ofstream*>(stream)->is_open()) {
+			throw FileNotOpenError("File cannot be open");
+		}
 	}
 
 	~FileOutput() {
