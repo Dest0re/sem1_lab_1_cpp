@@ -8,13 +8,13 @@ Line::Line(const Point point1, const Point point2) : p1{ point1 }, p2{ point2 } 
 
 
     if (p1 == p2) {
-        throw;  // TODO
+        throw std::invalid_argument("The dots are equal");
     }
 
     eq.a = p1.y - p2.y;
     eq.b = p2.x - p1.x;
 
-    if (!correct_check()) throw;  // TODO
+    if (!correct_check()) throw std::invalid_argument("Line cannot exist");
 
     eq.c = (p1.x * p2.y) - (p2.x * p1.y);  // Строго говоря, скобки излишни и не влияют на порядок выполнения, однако они способствуют читаемости.
     eq.k = eq.a / eq.b;

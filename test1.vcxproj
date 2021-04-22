@@ -19,29 +19,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="rectangles_comp\DebugSet.cpp" />
     <ClCompile Include="rectangles_comp\geometry\Line.cpp" />
     <ClCompile Include="rectangles_comp\geometry\Point.cpp" />
     <ClCompile Include="rectangles_comp\geometry\Rect.cpp" />
     <ClCompile Include="rectangles_comp\geometry\Segment.cpp" />
-    <ClCompile Include="rectangles_comp\InputOutput.cpp" />
     <ClCompile Include="rectangles_comp\main.cpp" />
     <ClCompile Include="rectangles_comp\Program.cpp" />
-    <ClCompile Include="rectangles_comp\ProgramIO.cpp" />
-    <ClCompile Include="rectangles_comp\ProgramOutput.cpp" />
-    <ClCompile Include="rectangles_comp\UserInput.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="rectangles_comp\DebugSet.h" />
+    <ClInclude Include="rectangles_comp\Array.h" />
     <ClInclude Include="rectangles_comp\geometry\Line.h" />
     <ClInclude Include="rectangles_comp\geometry\Point.h" />
     <ClInclude Include="rectangles_comp\geometry\Rect.h" />
     <ClInclude Include="rectangles_comp\geometry\Segment.h" />
-    <ClInclude Include="rectangles_comp\InputOutput.h" />
+    <ClInclude Include="rectangles_comp\new_input.h" />
+    <ClInclude Include="rectangles_comp\new_output.h" />
     <ClInclude Include="rectangles_comp\Program.h" />
-    <ClInclude Include="rectangles_comp\ProgramIO.h" />
-    <ClInclude Include="rectangles_comp\ProgramOutput.h" />
-    <ClInclude Include="rectangles_comp\UserInput.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

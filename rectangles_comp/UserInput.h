@@ -2,6 +2,7 @@
 #include <iostream>
 #include "InputOutput.h"
 #include "geometry/Rect.h"
+#include "Array.h"
 
 struct RectsPair {
 	Rect** r = new Rect*[2];
@@ -23,28 +24,9 @@ struct RectsPair {
 };
 
 struct ProgramInput {
-	double*** rects;
+	Array<2, Array<4, Array<2, double>>> *rects = new Array<2, Array<4, Array<2, double>>>;
 
 	ProgramInput() {
-		rects = new double** [2];
-		for (int r = 0; r < 2; r++) {
-			rects[r] = new double* [4];
-			for (int d = 0; d < 4; d++) {
-				rects[r][d] = new double[2];
-				rects[r][d][0] = 0;
-				rects[r][d][0] = 1;
-			}
-		}
-	}
-
-	~ProgramInput() {
-		for (int r = 0; r < 2; r++) {
-			for (int d = 0; d < 4; d++) {
-				delete rects[r][d];
-			}
-			delete rects[r];
-		}
-		delete rects;
 	}
 
 	RectsPair extract();
@@ -52,11 +34,16 @@ struct ProgramInput {
 	void write(std::ostream* stream) {
 		for (int r = 0; r < 2; r++) {
 			for (int d = 0; d < 4; d++) {
-				*stream << rects[r][d][0] << std::endl;
-				*stream << rects[r][d][1] << std::endl;
+				*stream << (*rects)[r][d][0] << std::endl;
+				*stream << (*rects)[r][d][1] << std::endl;
 			}
 		}
 	}
+
+	~ProgramInput() {
+		delete rects;
+	}
+
 };
 
 class UserInput {

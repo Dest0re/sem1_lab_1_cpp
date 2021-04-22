@@ -16,18 +16,6 @@ public:
 	}
 };
 
-struct FileNotExistError : std::exception {
-private:
-	std::string _error_text;
-
-public:
-	FileNotExistError(std::string error_text) : _error_text{ error_text } {};
-
-	const char* what() {
-		return _error_text.c_str();
-	}
-};
-
 struct FileAlreadyExistError : std::exception {
 private:
 	std::string _error_text;
@@ -46,6 +34,8 @@ protected:
 	bool _print(T value, std::string end = "\n") {
 		
 		if (!(*stream << value)) throw WriteError("Error while writing data.");
+
+		*stream << end;
 
 		if (stream->fail()) {
 			stream->clear();
@@ -83,7 +73,8 @@ private:
 public:
 
 	static bool IsFileExist(std::string filepath) {
-		std::ifstream file(filepath);
+
+		std::ifstream file(filepath, std::ifstream::in);
 		bool result = file.good();
 		file.close();
 		return result;
@@ -99,15 +90,31 @@ public:
 		return true;
 	}
 
+	template <typename T>
+	bool print(T value, std::string end = "\n") {
+		try {
+			return _print(value, end);
+		}
+		catch (WriteError) {
+			return true;
+		}
+	}
+
 	FileOutput(std::string filepath, std::ios_base::openmode mode) : _filepath{ filepath } {
-		if (!IsFileExist(filepath)) {
-			throw FileNotExistError("File does not exist.");
+		std::error_code ec;
+		if (!std::filesystem::is_regular_file(filepath, ec)) {
+			throw FileNotOpenError("File cannot be open");
 		}
 
 		if (!TryToOverwrite(filepath)) {
 			throw FileAlreadyExistError("File already exist.");
 		}
 
-		stream = &std::ofstream(filepath, mode);
+		stream = new std::ofstream(filepath, mode);
+	}
+
+	~FileOutput() {
+		static_cast<std::ofstream*>(stream)->close();
+		delete stream;
 	}
 };

@@ -18,6 +18,18 @@ public:
 	}
 };
 
+struct FileNotExistError : std::exception {
+private:
+	std::string _error_text;
+
+public:
+	FileNotExistError(std::string error_text) : _error_text{ error_text } {};
+
+	const char* what() {
+		return _error_text.c_str();
+	}
+};
+
 struct FileReadingError : std::exception {
 private:
 	std::string _error_text;
@@ -172,8 +184,19 @@ private:
 	}
 
 public:
+	static bool IsFileExist(std::string filepath) {
+		std::ifstream file(filepath);
+		bool result = file.good();
+		file.close();
+		return result;
+	}
+
 	FileInput(std::string filepath, std::ios_base::openmode mode) : _filepath{ filepath } {
 		this->stream = new std::ifstream(filepath, mode);
+
+		if (!IsFileExist(filepath)) {
+			throw FileNotExistError("File does not exist.");
+		}
 
 		if (!static_cast<std::ifstream*>(stream)->is_open()) {
 			static_cast<std::ifstream*>(stream)->close();
@@ -193,6 +216,7 @@ public:
 		}
 		else {
 			eof_exc("Error while getting a string.");
+			return "";
 		}
 	}
 
@@ -203,6 +227,7 @@ public:
 		}
 		else {
 			eof_exc("Error while getting a num.");
+			return 0;
 		}
 	}
 
@@ -213,6 +238,7 @@ public:
 		}
 		else {
 			eof_exc("Error while getting a num in range.");
+			return 0;
 		}
 	}
 

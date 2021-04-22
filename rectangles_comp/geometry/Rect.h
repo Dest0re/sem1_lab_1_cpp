@@ -3,15 +3,17 @@
 
 class Rect {
 public:
-    Point points[4];
+    Point** points = new Point*[4];
 
-    Segment* edges[4];
+    Segment** edges = new Segment*[4];
 
     bool correct_check(Point, Point, Point, Point);
 
-    Rect(const Point = Point(0, 0), const Point = Point(0, 1), const Point = Point(1, 1), const Point = Point(1, 0));
+    Rect(Point* = new Point(0, 0), Point* = new Point(0, 1), Point* = new Point(1, 1), Point* = new Point(1, 0));
     Rect(double[2], double[2], double[2], double[2]);
     Rect(double*[2]);
+
+    ~Rect();
 
     static bool is_line_intersect_rectangle(Rect r, Line l) {
         for (int i = 0; i < 4; i++) {
@@ -25,9 +27,9 @@ public:
 
         for (int i = 0; i < 2; i++) {
             for (int e = 0; e < 4; e++) {
-                int r2_position = rects[i].edges[e]->points_position(rects[1 - i].points);
+                int r2_position = rects[i].edges[e]->points_position(*(rects[1 - i].points));
                 if (r2_position != 0) {
-                    int r1_position = rects[1 - i].edges[e]->points_position(rects[1 - i].points);
+                    int r1_position = rects[1 - i].edges[e]->points_position(*(rects[1 - i].points));
                     if (r2_position != r1_position) {
                         return false;
                     }
@@ -39,5 +41,14 @@ public:
 
     bool is_intersect_line(const Line);
 
-    bool are_intersect(const Rect);
+    bool are_intersect(Rect&);
+
+    Rect& operator=(const Rect& rect) {
+        for (int i = 0; i < 4; i++) {
+            edges[i] = rect.edges[i];
+            points[i] = rect.points[i];
+        }
+
+        return *this;
+    }
 };

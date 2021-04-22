@@ -21,25 +21,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="rectangles_comp\DebugSet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="rectangles_comp\InputOutput.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="rectangles_comp\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="rectangles_comp\Program.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="rectangles_comp\ProgramIO.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="rectangles_comp\ProgramOutput.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="rectangles_comp\UserInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="rectangles_comp\geometry\Line.cpp">
@@ -56,22 +41,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="rectangles_comp\DebugSet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="rectangles_comp\InputOutput.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="rectangles_comp\Program.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="rectangles_comp\ProgramIO.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="rectangles_comp\ProgramOutput.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="rectangles_comp\UserInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="rectangles_comp\geometry\Line.h">
@@ -85,6 +55,15 @@
     </ClInclude>
     <ClInclude Include="rectangles_comp\geometry\Segment.h">
       <Filter>Header Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="rectangles_comp\Array.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rectangles_comp\new_input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rectangles_comp\new_output.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

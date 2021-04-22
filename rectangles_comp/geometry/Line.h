@@ -16,8 +16,8 @@ private:
     };
 
 public:
-    const Point p1;
-    const Point p2;
+    Point p1;
+    Point p2;
     line_equality eq;
 
     bool correct_check();
@@ -68,4 +68,5 @@ public:
     bool is_intersect(const Line);
 
     bool points_position(Point[4]);
+
 };

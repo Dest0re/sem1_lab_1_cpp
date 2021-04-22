@@ -55,7 +55,7 @@ public:
 
 	T& operator[](const int index) {
 		assert(index >= 0 && index < _length);
-		return this->_data[index];
+		return (this->_data[index]);
 	}
 
 	int getLength() {
