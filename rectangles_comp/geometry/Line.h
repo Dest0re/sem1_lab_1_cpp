@@ -54,7 +54,7 @@ public:
                     position = l.point_position(points[i]);
                 }
             }
-            else if (l.point_position(points[i]) != position) return 0;
+            else if (l.point_position(points[i]) != position && l.point_position(points[i]) != 0) return 0;
         }
         return position;
     }
