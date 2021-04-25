@@ -1,8 +1,27 @@
 ﻿#pragma once
-class DebugSet
+#include <string>
+#include <iostream>
+
+constexpr int SET_SIZE = 5;
+
+
+struct DebugSet
 {
+	int size = SET_SIZE;
 	double*** datasets;
-	int results[5];
+	int results[SET_SIZE];
+
+	static std::string get_result_text(int result) {
+		switch (result) {
+		case -1:
+			return "the rectangle(s) isn't exist; ";
+		case 0:
+			return "the rectangles aren't intersect;";
+		case 1:
+			return "the rectangles are intersect; ";
+		}
+		return "";
+	}
 
 	void edit_line(double* line, double v0, double v1, double v2, double v3, double v4, double v5, double v6, double v7) {
 		line[0] = v0;
@@ -27,32 +46,32 @@ class DebugSet
 		// 1,  один пересекает грань другого
 
 		edit_line(datasets[0][0], 0, 0, 4, 0, 4, 3, 0, 3);
-		edit_line(datasets[0][0], 3, 1, 5, 1, 5, 2, 3, 2);
+		edit_line(datasets[0][1], 3, 1, 5, 1, 5, 2, 3, 2);
 		results[0] = 1;
 
 		// 2,  оба заданы некорректно
 
-		edit_line(datasets[0][0], 0, 0, 0, 0, 0, 0, 0, 0);
-		edit_line(datasets[0][0], 0, 0, 0, 0, 0, 0, 0, 0);
+		edit_line(datasets[1][0], 0, 0, 0, 0, 0, 0, 0, 0);
+		edit_line(datasets[1][1], 0, 0, 0, 0, 0, 0, 0, 0);
 		results[1] = -1;
 
 		// 3,  один внутри другого
 
-		edit_line(datasets[0][0], 0, 0, 6, 0, 6, 5, 0, 5);
-		edit_line(datasets[0][0], 2, 1, 5, 1, 5, 4, 2, 4);
+		edit_line(datasets[2][0], 0, 0, 6, 0, 6, 5, 0, 5);
+		edit_line(datasets[2][1], 2, 1, 5, 1, 5, 4, 2, 4);
 		results[2] = 1;
 
 		// 4,  пересекаются гранью
 
-		edit_line(datasets[0][0], 0, 0, 5, 0, 5, 5, 0, 5);
-		edit_line(datasets[0][0], 5, 0, 7, 0, 7, 5, 5, 5);
+		edit_line(datasets[3][0], 0, 0, 5, 0, 5, 5, 0, 5);
+		edit_line(datasets[3][1], 5, 0, 7, 0, 7, 5, 5, 5);
 		results[3] = 1;
 
 
 		// 5,  не пересекаются
 
-		edit_line(datasets[0][0], 0, 0, 3, 0, 3, 3, 0, 3);
-		edit_line(datasets[0][0], 6, 0, 9, 0, 9, 3, 6, 3);
+		edit_line(datasets[4][0], 0, 0, 3, 0, 3, 3, 0, 3);
+		edit_line(datasets[4][1], 6, 0, 9, 0, 9, 3, 6, 3);
 		results[4] = 0;
 	}
 

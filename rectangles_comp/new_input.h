@@ -71,7 +71,7 @@ public:
 	std::istream* stream = 0;
 
 
-	virtual std::string get_string() = 0;
+	virtual std::string get_string() =0;
 
 
 	// Получение строки.

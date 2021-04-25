@@ -6,6 +6,7 @@
 #include "geometry/Rect.h"
 #include "new_input.h"
 #include "new_output.h"
+#include "DebugSet.h"
 
 const std::string greeting_string =
 "Starikov Danil, 404 gr. variation 10, task 1.\n\n"
@@ -21,6 +22,55 @@ public:
 
 	void greeting() {
 		std::cout << greeting_string << std::endl;
+	}
+
+	void ask_for_debug() {
+		std::string choice;
+
+		std::cout << "Run tests? [ENTER] to run, any letter to continue; ";
+		getline(std::cin, choice);
+
+		if (choice != "") return;
+
+		DebugSet set = DebugSet();
+		int result;
+		
+		for (int i = 0; i < set.size; i++) {
+			try {
+				Rect r1 = Rect(set.datasets[i][0]);
+				Rect r2 = Rect(set.datasets[i][1]);
+
+				result = static_cast<int>(r1.are_intersect(r2));
+			}
+			catch (std::invalid_argument) {
+				result = -1;
+			}
+
+			if (result != set.results[i]) {
+				std::cout << "Its an ERROR occured while passing the tests!" << std::endl;
+				std::cout << "Test #" << i+1 << " failed!" << std::endl << std::endl;
+				std::cout << "Dataset: " << std::endl << std::endl;
+
+				for (int r = 0; r < 2; r++) {
+					std::cout << "Rect #" << r+1 << ": " << std::endl;
+
+					for (int c = 0; c < 8; c += 2) {
+						std::cout << "[ " << set.datasets[i][r][c] << "; " << set.datasets[i][r][c+1] << " ]" << std::endl;
+					}
+				}
+
+				std::cout << std::endl << "Expected result: " << DebugSet::get_result_text(set.results[i]) << std::endl;
+				std::cout << "Real result: " << DebugSet::get_result_text(result) << std::endl;
+				
+				std::cout << "The program will be terminated immediately!" << std::endl << std::endl << std::endl;
+
+				std::cout << "Sorry!" << std::endl;
+
+				exit(2);
+			}
+		}
+
+		std::cout << "All the tests passed successfully!" << std::endl << std::endl;
 	}
 
 	FileOutput open_file_for_output(std::string filepath) {
@@ -124,8 +174,12 @@ public:
 				file.print("Input data: ", "\n\n");
 
 				for (int r = 0; r < 2; r++) {
-					for (int c = 0; c < 8; c++) {
-						file.print<double>(rects[r][c]);
+					for (int c = 0; c < 8; c += 2) {
+						file.print("[ ", "");
+						file.print(rects[r][c], "");
+						file.print("; ", "");
+						file.print(rects[r][c + 1], "");
+						file.print(" ]\n");
 					}
 				}
 
@@ -176,8 +230,12 @@ public:
 					file.print("Input data: ", "\n\n");
 
 					for (int r = 0; r < 2; r++) {
-						for (int c = 0; c < 8; c++) {
-							file.print<double>(rects[r][c]);
+						for (int c = 0; c < 8; c += 2) {
+							file.print("[ ", "");
+							file.print(rects[r][c], "");
+							file.print("; ", "");
+							file.print(rects[r][c + 1], "");
+							file.print(" ]");
 						}
 					}
 

@@ -10,7 +10,7 @@
 int main() {
 	Program program = Program();
 	program.greeting();
-	//program.ask_for_debug();
+	program.ask_for_debug();
 	program.run();
 
 	return 0;
