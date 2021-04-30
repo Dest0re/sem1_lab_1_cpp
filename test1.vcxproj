@@ -33,8 +33,8 @@
     <ClInclude Include="rectangles_comp\geometry\Point.h" />
     <ClInclude Include="rectangles_comp\geometry\Rect.h" />
     <ClInclude Include="rectangles_comp\geometry\Segment.h" />
-    <ClInclude Include="rectangles_comp\new_input.h" />
-    <ClInclude Include="rectangles_comp\new_output.h" />
+    <ClInclude Include="rectangles_comp\Input.h" />
+    <ClInclude Include="rectangles_comp\Output.h" />
     <ClInclude Include="rectangles_comp\Program.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

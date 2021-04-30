@@ -59,10 +59,10 @@
     <ClInclude Include="rectangles_comp\geometry\Segment.h">
       <Filter>Header Files\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="rectangles_comp\new_input.h">
+    <ClInclude Include="rectangles_comp\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="rectangles_comp\new_output.h">
+    <ClInclude Include="rectangles_comp\Output.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="rectangles_comp\TestSet.h">

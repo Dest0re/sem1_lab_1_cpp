@@ -3,6 +3,8 @@
 #include <filesystem>
 #include <fstream>
 
+#include "Input.h"
+
 struct WriteError : std::exception {
 private:
 	std::string _error_text;

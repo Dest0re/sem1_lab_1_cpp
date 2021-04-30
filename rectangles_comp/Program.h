@@ -2,8 +2,8 @@
 #include <iostream>
 
 #include "geometry/Rect.h"
-#include "new_input.h"
-#include "new_output.h"
+#include "Input.h"
+#include "Output.h"
 #include "TestSet.h"
 
 const std::string greeting_string =
@@ -60,7 +60,7 @@ namespace Program {
 		std::cout << "Successful save." << std::endl;
 	}
 
-	void ask_for_debug() {
+	void ask_for_tests() {
 		std::string choice;
 
 		std::cout << "Run tests? [ENTER] to run, any letter to continue; ";
@@ -278,7 +278,7 @@ namespace Program {
 
 	void run() {
 		Program::greeting();
-		Program::ask_for_debug();
+		Program::ask_for_tests();
 
 		std::string choice;
 		do {
