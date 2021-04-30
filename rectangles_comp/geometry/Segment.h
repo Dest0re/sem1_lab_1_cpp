@@ -1,16 +1,20 @@
-#pragma once
+﻿#pragma once
 #include <utility>
 
 #include "Line.h"
 
+// Число e
 const double EPS = 1E-9;
 
+// Класс отрезка
 class Segment : public Line {
 private:
+	// Определение определителя матрицы 2*2
     double _det(double a, double b, double  c, double d) {
         return a * d - b * c;
     }
 
+	// Лежит ли точка c между точками a и b
 	bool _between(double a, double b, double c) {
 		return std::min(a, b) <= c + EPS && c <= std::max(a, b) + EPS;
 	}
@@ -22,8 +26,10 @@ private:
 	}
 
 public:
+	// Конструктор
     Segment(Point &p1, Point &p2) : Line(p1, p2) {}
 
+	// Пересекаются ли отрезки
     bool is_intersect(Segment *other) {
         double zn = _det(this->eq.a, this->eq.b, other->eq.a, other->eq.b);
 

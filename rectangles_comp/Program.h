@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 
 #include "geometry/Rect.h"
@@ -17,11 +17,15 @@ const std::string greeting_string =
 "The problem is: \n"
 "Determine if two specified rectangles on a plane have a common area.\n";
 
+// Пространство имён, содержащее методы работы программы
 namespace Program {
+	
+	// Приветствие
 	void greeting() {
 		std::cout << greeting_string << std::endl;
 	}
 
+	// Открыть файл для вывода
 	FileOutput open_file_for_output(std::string filepath) {
 		while (true) {
 			try {
@@ -37,6 +41,7 @@ namespace Program {
 		}
 	}
 
+	// Сохранить вывод программы
 	void save_output(std::string filepath, double** rects, bool result) {
 		FileOutput file = Program::open_file_for_output(filepath);
 
@@ -60,6 +65,7 @@ namespace Program {
 		std::cout << "Successful save." << std::endl;
 	}
 
+	// Спросить, нужно ли проводить тесты, и провести их, если нужно
 	void ask_for_tests() {
 		std::string choice;
 
@@ -116,6 +122,7 @@ namespace Program {
 		delete r2;
 	}
 
+	// Открыть файл для ввода
 	FileInput open_file_for_input(std::string filepath) {
 		while (true) {
 			try {
@@ -132,7 +139,7 @@ namespace Program {
 		}
 	}
 
-
+	// Прочитать координаты двух прямоугольников из файла
 	bool read_rects_from_file(double** rects, Rect** rect_objects, FileInput &input) {
 		try {
 			for (int r = 0; r < 2; r++) {
@@ -168,6 +175,7 @@ namespace Program {
 		return true;
 	}
 
+	// Ввод координат прямоугольника из консоли
 	void read_rects_from_console(double** rects, Rect** rect_objects) {
 		ConsoleInput input = ConsoleInput();
 		for (int r = 0; r < 2; r++) {
@@ -194,6 +202,7 @@ namespace Program {
 		}
 	}
 
+	// Спросить, нужно ли сохранять пользовательский ввод в файл, и сохранить его, если нужно
 	void ask_for_input_save(double** rects) {
 		std::string choice;
 
@@ -216,6 +225,7 @@ namespace Program {
 		}
 	}
 
+	// Спросить, нужно ли сохранить вывод программы в файл, и сохранить, если нужно
 	void ask_for_output_save(double** rects, bool result) {
 		std::string filepath;
 
@@ -226,7 +236,7 @@ namespace Program {
 		if (filepath != "") Program::save_output(filepath, rects, result);
 	}
 
-
+	// Действия на каждой итерации прогрммы
 	void loop() {
 		double** rects = new double*[2];
 		for (int i = 0; i < 2; i++) {
@@ -276,6 +286,7 @@ namespace Program {
 		delete[] rect_objects;
 	}
 
+	// Запустить программу
 	void run() {
 		Program::greeting();
 		Program::ask_for_tests();

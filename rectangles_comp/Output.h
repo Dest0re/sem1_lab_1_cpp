@@ -1,10 +1,11 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 #include <filesystem>
 #include <fstream>
 
 #include "Input.h"
 
+// Ошибка при записи
 struct WriteError : std::exception {
 private:
 	std::string _error_text;
@@ -17,6 +18,7 @@ public:
 	}
 };
 
+// Ошибка - файл уже существует
 struct FileAlreadyExistError : std::exception {
 private:
 	std::string _error_text;
@@ -29,8 +31,10 @@ public:
 	}
 };
 
+// Абстрактный класс вывода
 class OutputI {
 protected:
+	// Печать значения T
 	template <typename T>
 	bool _print(T value, std::string end = "\n") {
 		
@@ -48,15 +52,19 @@ protected:
 	}
 
 public:
+	// Поток вывода
 	std::ostream* stream = nullptr;
 };
 
+// Поток консольного вывода
 class ConsoleOutput : OutputI {
 public:
+	// Конструктор
 	ConsoleOutput() {
 		stream = &std::cout;
 	}
 
+	// Печать данных в консоль
 	template <typename T>
 	bool print(T value, std::string end = "\n") {
 		try {
@@ -68,11 +76,14 @@ public:
 	}
 };
 
+// Класс вывода в файл
 class FileOutput : OutputI {
 private:
+	// Путь к файлу
 	std::string _filepath;
 public:
 
+	// Существует ли файл
 	static bool IsFileExist(std::string filepath) {
 
 		std::ifstream file(filepath, std::ifstream::in);
@@ -81,6 +92,7 @@ public:
 		return result;
 	}
 
+	// Пробовать перезаписать файл
 	static bool TryToOverwrite(std::string filepath) {
 		std::error_code ec;
 		if (std::filesystem::exists(filepath, ec)) {
@@ -95,6 +107,7 @@ public:
 		return true;
 	}
 
+	// Запись данных в файл
 	template <typename T>
 	bool print(T value, std::string end = "\n") {
 		try {
@@ -105,6 +118,7 @@ public:
 		}
 	}
 
+	// Конструктор
 	FileOutput(std::string filepath, std::ios_base::openmode mode) : _filepath{ filepath } {
 
 		if (!TryToOverwrite(filepath)) {
@@ -118,6 +132,7 @@ public:
 		}
 	}
 
+	// Деструктор
 	~FileOutput() {
 		static_cast<std::ofstream*>(stream)->close();
 		delete stream;

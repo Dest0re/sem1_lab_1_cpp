@@ -5,6 +5,7 @@
 #include <filesystem>
 
 
+// Ошибка при неудачном считывании числа
 struct ReadNumError : std::exception {
 private:
 	std::string _error_text;
@@ -17,6 +18,7 @@ public:
 	}
 };
 
+// Ошибка при попытке открыть несуществующий файл
 struct FileNotExistError : std::exception {
 private:
 	std::string _error_text;
@@ -29,6 +31,7 @@ public:
 	}
 };
 
+// Ошибка при попытке прочитать файл
 struct FileReadingError : std::exception {
 private:
 	std::string _error_text;
@@ -41,6 +44,7 @@ public:
 	}
 };
 
+// Ошибка при попытке открыть файл
 struct FileNotOpenError : std::exception {
 private:
 	std::string _error_text;
@@ -53,6 +57,7 @@ public:
 	}
 };
 
+// Ошибка - конец файла
 struct EOFError : std::exception {
 private:
 	std::string _error_text;
@@ -65,11 +70,13 @@ public:
 	}
 };
 
+// Абстрактный класс ввода
 class InputI {
 public:
+	// Поток ввода
 	std::istream* stream = 0;
-
-
+	
+	// Абстрактный метод получения строки
 	virtual std::string get_string() =0;
 
 
@@ -101,6 +108,7 @@ public:
 };
 
 
+// Класс консольного ввода
 class ConsoleInput : InputI {
 
 private:
@@ -120,6 +128,7 @@ private:
 
 
 public:
+	// Получение числа
 	template <typename T>
 	T get_num() {
 		while (true) {
@@ -132,14 +141,17 @@ public:
 		}
 	}
 
+	// Конструктор
 	ConsoleInput() {
 		this->stream = &std::cin;
 	}
 
+	// Получение строки
 	std::string get_string() {
 		return this->_get_string();
 	}
 
+	// Получение строки в диапазоне от min до max
 	template <typename T>
 	T get_num(T min, T max) {
 		while (true) {
@@ -154,18 +166,20 @@ public:
 
 };
 
-
+// Класс файлового ввода
 class FileInput : InputI {
 private:
+	// Путь к файлу
 	std::string _filepath;
 
-	void eof_exc(std::string text = "") {
+	// Вывод исключения при достижении конца файла
+	void _eof_exc(std::string text = "") {
 		throw EOFError("End of a file! " + text);
 	}
 
+	// Проверка, доступен ли файл
 	static bool IsRegularFile(std::string filepath) {
 		std::error_code ec;
-
 		return std::filesystem::is_regular_file(filepath, ec);
 	}
 
@@ -183,6 +197,7 @@ private:
 	}
 
 public:
+	// Проверка, существует ли файл
 	static bool IsFileExist(std::string filepath) {
 		std::ifstream file(filepath);
 		bool result = file.good();
@@ -190,6 +205,7 @@ public:
 		return result;
 	}
 
+	// Конструктор
 	FileInput(std::string filepath, std::ios_base::openmode mode) : _filepath{ filepath } {
 		this->stream = new std::ifstream(filepath, mode);
 
@@ -208,39 +224,42 @@ public:
 		}
 	}
 
-
+	// Получение строки
 	std::string get_string() {
 		if (!static_cast<std::ifstream*>(stream)->eof()) {
 			return _get_string();
 		}
 		else {
-			eof_exc("Error while getting a string.");
+			_eof_exc("Error while getting a string.");
 			return "";
 		}
 	}
 
+	// Получение числа
 	template <typename T>
 	T get_num() {
 		if (!static_cast<std::ifstream*>(stream)->eof()) {
 			return InputI::_get_num<T>();
 		}
 		else {
-			eof_exc("Error while getting a num.");
+			_eof_exc("Error while getting a num.");
 			return 0;
 		}
 	}
 
+	// Получение числа в диапазоне от min до max
 	template <typename T>
 	T get_num(T min, T max) {
 		if (!static_cast<std::ifstream*>(stream)->eof()) {
 			return _get_num<T>(min, max);
 		}
 		else {
-			eof_exc("Error while getting a num in range.");
+			_eof_exc("Error while getting a num in range.");
 			return 0;
 		}
 	}
 
+	// Деструктор
 	~FileInput() {
 		if (static_cast<std::ifstream*>(stream)->is_open()) {
 			static_cast<std::ifstream*>(stream)->close();

@@ -10,3 +10,10 @@ const bool Point::operator==(const Point other) {
 const bool Point::operator==(const Point other) const {
     return other.x == x && other.y == y ? true : false;
 }
+
+Point& Point::operator=(const Point& other) {
+    x = other.x;
+    y = other.y;
+
+    return *this;
+}

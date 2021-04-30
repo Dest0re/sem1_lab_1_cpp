@@ -1,20 +1,27 @@
-#pragma once
+﻿#pragma once
 #include "Segment.h"
 const int RECT_POINTS_COUNT = 4;
 const int RECT_EDGES_COUNT = 4;
 
+// Класс прямоугольника
 class Rect {
 public:
+    // Массив точек прямоугольника
     Point** points = new Point*[RECT_POINTS_COUNT];
 
+    // Массив отрезков, составляющих грани
     Segment** edges = new Segment*[RECT_EDGES_COUNT];
 
+    // Проверка корректности прямоугольника
     bool correct_check(Point&, Point&, Point&, Point&);
 
+    // Конструктор
     Rect(Point* = new Point(0, 0), Point* = new Point(0, 1), Point* = new Point(1, 1), Point* = new Point(1, 0));
+    
+    // Конструктор
     Rect(double*);
 
-
+    // Пересекаются ли прямоугольники
     static bool are_rects_intersect(Rect &r1, Rect &r2) {
         Rect rects[2] = { r1, r2 };
         
@@ -46,8 +53,10 @@ public:
         return false;
     }
 
+    // Пересекаются ли прямоугольники
     bool are_intersect(Rect&);
 
+    // Перегрузка оператора =
     Rect& operator=(const Rect& rect) {
         for (int i = 0; i < RECT_POINTS_COUNT; i++) {
             edges[i] = rect.edges[i];
@@ -57,6 +66,7 @@ public:
         return *this;
     }
 
+    // Перегрузка оператора ==
     bool operator==(Rect &other) {
         int counter = 0;
 
