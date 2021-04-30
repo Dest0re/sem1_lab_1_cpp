@@ -4,16 +4,18 @@
 #include "geometry/Rect.h"
 #include "new_input.h"
 #include "new_output.h"
-#include "DebugSet.h"
+#include "TestSet.h"
 
 const std::string greeting_string =
 "Starikov Danil, 404 gr. variation 10, task 1.\n\n"
-"Please enter the coordinates of the points in the specified sequence:\n"
+"Please enter the coordinates of the points in the specified sequence:\n\n"
 " 1+----------------+2 \n"
 "  |                |  \n"
 "  |                |  \n"
 "  |                |  \n"
-" 4+----------------+3 \n";
+" 4+----------------+3 \n\n"
+"The problem is: \n"
+"Determine if two specified rectangles on a plane have a common area.\n";
 
 namespace Program {
 	void greeting() {
@@ -66,7 +68,7 @@ namespace Program {
 
 		if (choice != "") return;
 
-		DebugSet set = DebugSet();
+		TestSet set = TestSet();
 
 		Rect* r1 = nullptr;
 		Rect* r2 = nullptr;
@@ -97,8 +99,8 @@ namespace Program {
 					}
 				}
 
-				std::cout << std::endl << "Expected result: " << DebugSet::get_result_text(set.results[i]) << std::endl;
-				std::cout << "Real result: " << DebugSet::get_result_text(result) << std::endl;
+				std::cout << std::endl << "Expected result: " << TestSet::get_result_text(set.results[i]) << std::endl;
+				std::cout << "Real result: " << TestSet::get_result_text(result) << std::endl;
 
 				std::cout << "The program will be terminated immediately!" << std::endl << std::endl << std::endl;
 

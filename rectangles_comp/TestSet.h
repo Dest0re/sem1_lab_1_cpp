@@ -4,7 +4,7 @@
 constexpr int SET_SIZE = 5;
 
 
-struct DebugSet
+struct TestSet
 {
 	int size = SET_SIZE;
 	double*** datasets;
@@ -33,7 +33,7 @@ struct DebugSet
 		line[7] = v7;
 	}
 
-	DebugSet() {
+	TestSet() {
 		datasets = new double** [5];
 		for (int s = 0; s < 5; s++) {
 			datasets[s] = new double* [5];
@@ -75,7 +75,7 @@ struct DebugSet
 	}
 
 
-	~DebugSet() {
+	~TestSet() {
 		for (int s = 0; s < 5; s++) {
 			for (int r = 0; r < 2; r++) {
 				delete[] datasets[s][r];

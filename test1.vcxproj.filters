@@ -39,7 +39,7 @@
     <ClCompile Include="rectangles_comp\geometry\Segment.cpp">
       <Filter>Source Files\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="rectangles_comp\DebugSet.cpp">
+    <ClCompile Include="rectangles_comp\TestSet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,7 +65,7 @@
     <ClInclude Include="rectangles_comp\new_output.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="rectangles_comp\DebugSet.h">
+    <ClInclude Include="rectangles_comp\TestSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="rectangles_comp\DebugSet.cpp" />
+    <ClCompile Include="rectangles_comp\TestSet.cpp" />
     <ClCompile Include="rectangles_comp\geometry\Line.cpp" />
     <ClCompile Include="rectangles_comp\geometry\Point.cpp" />
     <ClCompile Include="rectangles_comp\geometry\Rect.cpp" />
@@ -28,7 +28,7 @@
     <ClCompile Include="rectangles_comp\Program.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="rectangles_comp\DebugSet.h" />
+    <ClInclude Include="rectangles_comp\TestSet.h" />
     <ClInclude Include="rectangles_comp\geometry\Line.h" />
     <ClInclude Include="rectangles_comp\geometry\Point.h" />
     <ClInclude Include="rectangles_comp\geometry\Rect.h" />
