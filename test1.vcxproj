@@ -28,7 +28,6 @@
     <ClCompile Include="rectangles_comp\Program.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="rectangles_comp\Array.h" />
     <ClInclude Include="rectangles_comp\DebugSet.h" />
     <ClInclude Include="rectangles_comp\geometry\Line.h" />
     <ClInclude Include="rectangles_comp\geometry\Point.h" />

@@ -1,4 +1,5 @@
 #pragma once
+#include <utility>
 
 #include "Line.h"
 
@@ -21,7 +22,7 @@ private:
 	}
 
 public:
-    Segment(Point p1, Point p2) : Line(p1, p2) {}
+    Segment(Point &p1, Point &p2) : Line(p1, p2) {}
 
     bool is_intersect(Segment *other) {
         double zn = _det(this->eq.a, this->eq.b, other->eq.a, other->eq.b);

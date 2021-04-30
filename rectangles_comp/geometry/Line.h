@@ -24,15 +24,15 @@ public:
 
     Line(const Point, const Point);
 
-    static bool is_point_belongs(Line line, const Point p) {
+    static bool is_point_belongs(Line &line, const Point &p) {
         return line.eq.subst(p) == 0 ? true : false;
     }
 
-    static bool is_perpendicular(Line l1, Line l2) {
+    static bool is_perpendicular(Line &l1, Line &l2) {
         return (l1.eq.a * l2.eq.a) + (l1.eq.b * l2.eq.b) == 0;
     }
 
-    static int point_position(const Line l, const Point p) {
+    static int point_position(const Line &l, const Point &p) {
         int position = int((p.x * l.eq.a) + (p.y * l.eq.b) + l.eq.c);
         if (position == 0) {
             return 0;
@@ -42,11 +42,11 @@ public:
         }
     }
 
-    static bool is_intersect(Line l1, Line l2) {
+    static bool is_intersect(Line &l1, Line &l2) {
         return l1.point_position(l2.p1) != l1.point_position(l2.p2);
     }
 
-    static bool points_position(Line l, Point points[4]) {
+    static bool points_position(Line &l, Point points[4]) {
         int position = l.point_position(points[0]);
         for (int i = 1; i < 4; i++) {
             if (position == 0) {
@@ -61,7 +61,7 @@ public:
 
     bool is_point_belongs(const Point);
 
-    bool is_perpendicular(const Line);
+    bool is_perpendicular(Line);
 
     int point_position(const Point);
 

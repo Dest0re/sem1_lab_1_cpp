@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include <string>
-#include <istream>
 #include <iostream>
 #include <fstream>
 #include <filesystem>
@@ -243,7 +242,9 @@ public:
 	}
 
 	~FileInput() {
-		static_cast<std::ifstream*>(stream)->close();
-		delete stream;
+		if (static_cast<std::ifstream*>(stream)->is_open()) {
+			static_cast<std::ifstream*>(stream)->close();
+		}
+		if (this->stream) delete static_cast<std::ifstream*>(stream);
 	}
 };

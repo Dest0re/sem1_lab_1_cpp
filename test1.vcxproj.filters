@@ -59,9 +59,6 @@
     <ClInclude Include="rectangles_comp\geometry\Segment.h">
       <Filter>Header Files\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="rectangles_comp\Array.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="rectangles_comp\new_input.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include <string>
-#include <iostream>
 
 constexpr int SET_SIZE = 5;
 

@@ -1,4 +1,6 @@
-﻿#include "Line.h"
+﻿#include <stdexcept>
+
+#include "Line.h"
 
 bool Line::correct_check() {
     return (eq.a == 0 && eq.b == 0) ? false : true;
@@ -16,7 +18,7 @@ Line::Line(const Point point1, const Point point2) : p1{ point1 }, p2{ point2 } 
 
     if (!correct_check()) throw std::invalid_argument("Line cannot exist");
 
-    eq.c = (p1.x * p2.y) - (p2.x * p1.y);  // Строго говоря, скобки излишни и не влияют на порядок выполнения, однако они способствуют читаемости.
+    eq.c = (p1.x * p2.y) - (p2.x * p1.y);
     eq.k = eq.a / eq.b;
 }
 
@@ -25,7 +27,7 @@ bool Line::is_point_belongs(const Point p) {
     return is_point_belongs(*this, p);
 }
 
-bool Line::is_perpendicular(const Line l) {
+bool Line::is_perpendicular(Line l) {
     return is_perpendicular(*this, l);
 }
 
@@ -33,7 +35,7 @@ int Line::point_position(const Point p) {
     return point_position(*this, p);
 }
 
-bool Line::is_intersect(const Line l) {
+bool Line::is_intersect(Line l) {
     return is_intersect(*this, l);
 }
 
